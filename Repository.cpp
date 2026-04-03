@@ -4,15 +4,15 @@
 using namespace std;
 
 void Repository::addSong(const Song &s) {
-    this->songs.add(s);
+    songs.add(s);
 }
 
-Song Repository::findByArtistAndTitle(const std::string &artist, const std::string &title) {
-    for (int i = 0; i < this->songs.getSize(); i++) {
-        Song s = songs[i];
-        if (s.getArtist() == artist && s.getTitle() == title)
-            return s;
+std::optional<Song> Repository::findByArtistAndTitle(const std::string &artist, const std::string &title) {
+    for (auto song: songs) {
+        if (song.getArtist() == artist && song.getTitle() == title) {
+            return song;
+        }
     }
 
-    return Song{};
+    return std::nullopt;
 }

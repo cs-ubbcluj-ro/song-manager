@@ -1,16 +1,24 @@
 #pragma once
+
+#include "Playlist.h"
 #include "Repository.h"
 
 class Controller {
 private:
     Repository repo;
-    // add playlist: std::vector
+    Playlist playlist;
 
 public:
-    Controller(const Repository &r) : repo(r) {
+    explicit Controller(const Repository &r) : repo{r}, playlist{Playlist{}} {
     }
 
-    Repository getRepo() const { return repo; }
+    Repository &getRepo() {
+        return repo;
+    }
+
+    Playlist &getPlaylist() {
+        return playlist;
+    }
 
     // Adds a song with the given data to the song repository.
     void addSongToRepository(const std::string &artist, const std::string &title, double minutes, double seconds,
@@ -25,4 +33,8 @@ public:
 
     // Adds all the songs from the repository, that have the given artist, to the current playlist.
     void addAllSongsByArtistToPlaylist(const std::string &artist);
+
+    void startPlaylist();
+
+    void nextSongPlaylist();
 };

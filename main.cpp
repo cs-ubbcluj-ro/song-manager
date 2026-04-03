@@ -4,8 +4,6 @@
 using namespace std;
 
 int main() {
-    system("color f4");
-
     Tests::testAll();
 
     Repository repo{};
@@ -17,6 +15,7 @@ int main() {
     repo.addSong(s3);
 
     Controller ctrl{repo};
+
     UI ui{ctrl};
     ui.run();
 

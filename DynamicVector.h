@@ -1,5 +1,4 @@
 #pragma once
-#include <iterator>
 
 template<typename T>
 class DynamicVector {
@@ -10,11 +9,12 @@ private:
 
 public:
     // default constructor for a DynamicVector
-    DynamicVector(int capacity = 10);
+    explicit DynamicVector(int capacity = 10);
 
     // copy constructor for a DynamicVector
     DynamicVector(const DynamicVector &v);
 
+    // destructor
     ~DynamicVector();
 
     // assignment operator for a DynamicVector
@@ -32,8 +32,6 @@ public:
 
     int getSize() const;
 
-    void setSize(int s) { size = s; }
-
 private:
     // Resizes the current DynamicVector, multiplying its capacity by a given factor (real number).
     void resize(double factor = 2);
@@ -44,28 +42,51 @@ public:
         T *ptr;
 
     public:
-        // TODO
         // constructor with parameter T*
-        // operator++ - pre-incrementing
-        // operator++ - post-incrementing
+        explicit iterator(T *ptr) : ptr{ptr} {
+        }
+
+        // operator ++pre
+        iterator &operator++() {
+            ++ptr;
+            return *this;
+        }
+
+        // operator post++
+        iterator operator++(int) {
+            iterator tmp = *this;
+            ++ptr;
+            return tmp;
+        }
+
         // dereferencing operator
-        // operator!=
+        T &operator*() {
+            return *ptr;
+        }
+
+        // operator !=
+        bool operator!=(const iterator &other) {
+            return ptr != other.ptr;
+        }
+
+        // operator ==
+        bool operator==(const iterator &other) {
+            return ptr == other.ptr;
+        }
     };
 
     iterator begin() {
-        // TODO
+        return iterator(elems);
     }
 
     iterator end() {
-        // TODO
+        return iterator(elems + size);
     }
 };
 
 template<typename T>
-DynamicVector<T>::DynamicVector(int capacity) {
-    this->size = 0;
-    this->capacity = capacity;
-    this->elems = new T[capacity];
+DynamicVector<T>::DynamicVector(const int capacity)
+    : elems{new T[capacity]}, size{0}, capacity{capacity} {
 }
 
 template<typename T>
@@ -79,7 +100,7 @@ DynamicVector<T>::DynamicVector(const DynamicVector<T> &v) {
 
 template<typename T>
 DynamicVector<T>::~DynamicVector() {
-    delete[] this->elems;
+    delete[] elems;
 }
 
 template<typename T>
@@ -87,43 +108,43 @@ DynamicVector<T> &DynamicVector<T>::operator=(const DynamicVector<T> &v) {
     if (this == &v)
         return *this;
 
-    this->size = v.size;
-    this->capacity = v.capacity;
+    size = v.size;
+    capacity = v.capacity;
 
-    delete[] this->elems;
-    this->elems = new T[this->capacity];
-    for (int i = 0; i < this->size; i++)
-        this->elems[i] = v.elems[i];
+    delete[] elems;
+    elems = new T[capacity];
+    for (int i = 0; i < size; i++)
+        elems[i] = v.elems[i];
 
     return *this;
 }
 
 template<typename T>
 T &DynamicVector<T>::operator[](int index) {
-    // TODO
+    return elems[index];
 }
 
 template<typename T>
 void DynamicVector<T>::add(const T &e) {
-    if (this->size == this->capacity)
-        this->resize();
-    this->elems[this->size] = e;
-    this->size++;
+    if (size == capacity)
+        resize();
+    elems[size] = e;
+    size++;
 }
 
 template<typename T>
-void DynamicVector<T>::resize(double factor) {
-    this->capacity *= static_cast<int>(factor);
+void DynamicVector<T>::resize(const double factor) {
+    capacity *= static_cast<int>(factor);
 
-    T *els = new T[this->capacity];
-    for (int i = 0; i < this->size; i++)
-        els[i] = this->elems[i];
+    T *tmp = new T[capacity];
+    for (int i = 0; i < size; i++)
+        tmp[i] = elems[i];
 
-    delete[] this->elems;
-    this->elems = els;
+    delete[] elems;
+    elems = tmp;
 }
 
 template<typename T>
 int DynamicVector<T>::getSize() const {
-    return this->size;
+    return size;
 }

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Controller.h"
 
 class UI {
@@ -6,7 +7,7 @@ private:
     Controller ctrl;
 
 public:
-    UI(const Controller &c) : ctrl(c) {
+    explicit UI(const Controller &c) : ctrl(c) {
     }
 
     void run();
@@ -25,4 +26,8 @@ private:
     void addSongToPlaylist();
 
     void addAllSongsByArtistToPlaylist();
+
+    void playSongsFromPlaylist();
+
+    void nextSongFromPlaylist();
 };

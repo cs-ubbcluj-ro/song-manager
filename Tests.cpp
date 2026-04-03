@@ -1,7 +1,9 @@
 #include "Tests.h"
 #include <cassert>
+#include "Controller.h"
 #include "DynamicVector.h"
 #include "Repository.h"
+#include "Playlist.h"
 
 void Tests::testSong() {
     Duration d{4, 54};
@@ -14,46 +16,76 @@ void Tests::testSong() {
 }
 
 void Tests::testDynamicVector() {
-	DynamicVector<int> v1{2};
-	v1.add(10);
-	v1.add(20);
-	assert(v1.getSize() == 2);
-	assert(v1[1] == 20);
-	v1[1] = 25;
-	assert(v1[1] == 25);
-	v1.add(30);
-	assert(v1.getSize() == 3);
+    DynamicVector<int> v1{2};
+    v1.add(10);
+    v1.add(20);
+    assert(v1.getSize() == 2);
+    assert(v1[1] == 20);
+    v1[1] = 25;
+    assert(v1[1] == 25);
+    v1.add(30);
+    assert(v1.getSize() == 3);
 
-	DynamicVector<int> v2{v1};
-	assert(v2.getSize() == 3);
+    DynamicVector<int> v2{v1};
+    assert(v2.getSize() == 3);
 
-	DynamicVector<int> v3;
-	v3 = v1;
-	assert(v3[0] == 10);
+    DynamicVector<int> v3 = v1;
+    assert(v3[0] == 10);
 
-	// test iterator
-	DynamicVector<int>::iterator it = v1.begin();
-	assert(*it == 10);
-	assert(it != v1.end());
-	it++;
-	assert(*it == 25);
+    // test iterator
+    DynamicVector<int>::iterator it = v1.begin();
+    assert(*it == 10);
+    assert(it != v1.end());
+    ++it;
+    assert(*it == 25);
+    ++it;
+    assert(*it == 30);
+    ++it;
+    assert(it == v1.end());
 }
 
 void Tests::testRepository() {
     Repository repo{};
     Song s{"Ed Sheeran", "I see fire", Duration{4, 54}, "https://www.youtube.com/watch?v=2fngvQS_PmQ"};
     repo.addSong(s);
-    Song res = repo.findByArtistAndTitle("Ed Sheeran", "I see fire");
+    Song res = repo.findByArtistAndTitle("Ed Sheeran", "I see fire").value();
     assert(res.getTitle() == s.getTitle() && res.getArtist() == s.getArtist());
-    res = repo.findByArtistAndTitle("Ed Sheeran", "");
-    assert(res.getArtist().empty());
+    assert(repo.findByArtistAndTitle("Ed Sheeran", "").has_value() == false);
 
     DynamicVector<Song> songs = repo.getSongs();
     assert(songs.getSize() == 1);
 }
 
+void Tests::testPlaylist() {
+    Playlist playlist{};
+    Song s1{"Ed Sheeran", "I see fire", Duration{4, 54}, "https://www.youtube.com/watch?v=2fngvQS_PmQ"};
+    Song s2{"Two Steps From Hell", "Heart of Courage", Duration{8, 12}, "https://www.youtube.com/watch?v=XYKUeZQbMF0"};
+    playlist.addSong(s1);
+    playlist.addSong(s2);
+
+    assert(playlist.isEmpty() == false);
+    playlist.next();
+    assert(playlist.getCurrentSong().value().getArtist() == s2.getArtist());
+
+    playlist.next();
+    assert(playlist.getCurrentSong().value().getArtist() == s1.getArtist());
+}
+
 void Tests::testController() {
-    // TODO
+    Repository repo{};
+    Controller ctrl{repo};
+    ctrl.addSongToRepository("Ed Sheeran", "I see fire", 4, 54, "https://www.youtube.com/watch?v=2fngvQS_PmQ");
+    ctrl.addSongToRepository("Two Steps From Hell", "Heart of Courage", 8, 12,
+                             "https://www.youtube.com/watch?v=XYKUeZQbMF0");
+    Song s{"Ed Sheeran", "I see fire", Duration{4, 54}, "https://www.youtube.com/watch?v=2fngvQS_PmQ"};
+    ctrl.addSongToPlaylist(s);
+    ctrl.addAllSongsByArtistToPlaylist("Two Steps From Hell");
+
+    assert(ctrl.getRepo().getSongs().getSize() == 2);
+
+    Playlist list = ctrl.getPlaylist();
+    assert(list.isEmpty() == false);
+    assert(list.getCurrentSong().value().getArtist() == "Ed Sheeran");
 }
 
 void Tests::testAll() {
@@ -61,4 +93,5 @@ void Tests::testAll() {
     testDynamicVector();
     testRepository();
     testController();
+    testPlaylist();
 }

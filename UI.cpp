@@ -70,15 +70,14 @@ void UI::addSongToPlaylist() {
     std::string title;
     getline(cin, title);
 
+    const auto songOptional = ctrl.getRepo().findByArtistAndTitle(artist, title);
     // search for the song in the repository
-    Song s = this->ctrl.getRepo().findByArtistAndTitle(artist, title);
-    if (s.getArtist().empty() && s.getTitle().empty()) {
-        cout << "There are no songs with the given data in the repository. Nothing will be added to the playlist." <<
-                endl;
+    if (!songOptional.has_value()) {
+        cout << "There are no songs with the given query in the repository." << endl;
         return;
     }
 
-    this->ctrl.addSongToPlaylist(s);
+    ctrl.addSongToPlaylist(songOptional.value());
 }
 
 void UI::addAllSongsByArtistToPlaylist() {
@@ -86,12 +85,34 @@ void UI::addAllSongsByArtistToPlaylist() {
     std::string artist;
     getline(cin, artist);
 
-    this->ctrl.addAllSongsByArtistToPlaylist(artist);
+    ctrl.addAllSongsByArtistToPlaylist(artist);
+}
+
+void UI::playSongsFromPlaylist() {
+    if (ctrl.getPlaylist().isEmpty()) {
+        cout << "Nothing to play, the playlist is empty." << endl;
+        return;
+    }
+
+    auto songOptional = ctrl.getPlaylist().getCurrentSong();
+    if (!songOptional.has_value()) {
+        cerr << "There are no songs in the playlist." << endl;
+        return;
+    }
+
+    const Song &song = songOptional.value();
+    cout << "Now playing: " << song.getArtist() << " - " << song.getTitle() << endl;
+    ctrl.startPlaylist();
+}
+
+void UI::nextSongFromPlaylist() {
+    ctrl.getPlaylist().next();
 }
 
 void UI::run() {
     while (true) {
-        UI::printMenu();
+    mainMenu:
+        printMenu();
         int command{0};
         cout << "Input the command: ";
         cin >> command;
@@ -102,26 +123,53 @@ void UI::run() {
         // repository management
         if (command == 1) {
             while (true) {
-                UI::printRepositoryMenu();
+                printRepositoryMenu();
                 int commandRepo{0};
                 cout << "Input the command: ";
                 cin >> commandRepo;
                 cin.ignore();
-                if (commandRepo == 0)
-                    break;
                 switch (commandRepo) {
+                    case 0:
+                        goto mainMenu;
                     case 1:
-                        this->addSongToRepo();
+                        addSongToRepo();
                         break;
                     case 2:
-                        this->displayAllSongsRepo();
+                        displayAllSongsRepo();
+                        break;
+                    default:
+                        cout << "\nUnrecognized command." << endl;
                 }
             }
         }
 
         // playlist management
         if (command == 2) {
-            // TODO
+            while (true) {
+                printPlayListMenu();
+                int commandPlaylist{0};
+                cout << "Input the command: ";
+                cin >> commandPlaylist;
+                cin.ignore();
+                switch (commandPlaylist) {
+                    case 0:
+                        goto mainMenu;
+                    case 1:
+                        addSongToPlaylist();
+                        break;
+                    case 2:
+                        addAllSongsByArtistToPlaylist();
+                        break;
+                    case 3:
+                        playSongsFromPlaylist();
+                        break;
+                    case 4:
+                        nextSongFromPlaylist();
+                        break;
+                    default:
+                        cout << "\nUnrecognized command." << endl;
+                }
+            }
         }
     }
 }

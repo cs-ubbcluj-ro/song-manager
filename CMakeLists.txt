@@ -9,4 +9,6 @@ add_executable(song_manager
         Repository.cpp
         Song.cpp
         Tests.cpp
-        UI.cpp)
+        UI.cpp
+        Playlist.cpp
+        Playlist.h)
