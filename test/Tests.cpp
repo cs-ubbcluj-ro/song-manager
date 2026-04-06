@@ -1,16 +1,16 @@
 #include "Tests.h"
 #include <cassert>
-#include "Controller.h"
-#include "DynamicVector.h"
-#include "Repository.h"
-#include "Playlist.h"
+#include "controller/Controller.h"
+#include "domain/DynamicVector.h"
+#include "repository/Repository.h"
+#include "domain/Playlist.h"
 
 void Tests::testSong() {
     Duration d{4, 54};
     Song s{"Ed Sheeran", "I see fire", d, "https://www.youtube.com/watch?v=2fngvQS_PmQ"};
     assert(s.getArtist() == "Ed Sheeran");
     assert(s.getTitle() == "I see fire");
-    assert(s.getSource() == "https://www.youtube.com/watch?v=2fngvQS_PmQ");
+    assert(s.getSourceUrl() == "https://www.youtube.com/watch?v=2fngvQS_PmQ");
     assert(s.getDuration().getMinutes() == 4);
     assert(s.getDuration().getSeconds() == 54);
 }

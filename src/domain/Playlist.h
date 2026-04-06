@@ -4,7 +4,7 @@
 #include "Song.h"
 
 class Playlist {
-private:
+protected:
     DynamicVector<Song> songs;
     DynamicVector<Song>::iterator it;
 

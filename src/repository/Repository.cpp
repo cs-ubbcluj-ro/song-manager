@@ -1,4 +1,5 @@
 #include "Repository.h"
+#include "domain/Song.h"
 #include <string>
 
 using namespace std;

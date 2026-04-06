@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Playlist.h"
-#include "Repository.h"
+#include "domain/Playlist.h"
+#include "repository/Repository.h"
 
 class Controller {
 private:

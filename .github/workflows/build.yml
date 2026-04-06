@@ -1,0 +1,26 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v5
+
+      - name: Configure
+        run: cmake -S . -B target
+
+      - name: Build
+        run: cmake --build target
+
+      - name: Run tests
+        run: ctest --test-dir target --output-on-failure

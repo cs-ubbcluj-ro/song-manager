@@ -1,7 +1,7 @@
 #include "Song.h"
 
 void Song::play() const {
-    const std::string url = this->getSource();
+    const std::string url = this->getSourceUrl();
 
 #ifdef _WIN32
     const std::string cmd = "start \"\" \"" + url + "\"";

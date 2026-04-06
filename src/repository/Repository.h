@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Song.h"
-#include "DynamicVector.h"
+#include "domain/DynamicVector.h"
+#include "domain/Song.h"
 
 class Repository {
 private:

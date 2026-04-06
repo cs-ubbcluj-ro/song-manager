@@ -1,11 +1,9 @@
-#include "UI.h"
-#include "Tests.h"
+#include "repository/Repository.h"
+#include "ui/UI.h"
 
 using namespace std;
 
 int main() {
-    Tests::testAll();
-
     Repository repo{};
     Song s1{"Ed Sheeran", "I see fire", Duration{4, 54}, "https://www.youtube.com/watch?v=2fngvQS_PmQ"};
     Song s2{"Two Steps From Hell", "Heart of Courage", Duration{8, 12}, "https://www.youtube.com/watch?v=XYKUeZQbMF0"};

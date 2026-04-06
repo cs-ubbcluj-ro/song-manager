@@ -22,7 +22,7 @@ private:
     std::string artist;
     std::string title;
     Duration duration{};
-    std::string source; // YouTube Link
+    std::string sourceUrl; // YouTube Link
 
 public:
     // default constructor for a song
@@ -30,12 +30,12 @@ public:
 
     // constructor with parameters
     Song(const std::string &a, const std::string &t, const Duration &d, const std::string &s)
-        : artist{a}, title{t}, duration{d}, source{s} {
+        : artist{a}, title{t}, duration{d}, sourceUrl{s} {
     }
 
     std::string getTitle() const { return title; }
     std::string getArtist() const { return artist; }
-    std::string getSource() const { return source; }
+    std::string getSourceUrl() const { return sourceUrl; }
     Duration getDuration() const { return duration; }
 
     // Plays the current song: the page corresponding to the source link is opened in a browser.

@@ -28,12 +28,18 @@ brew install cmake
 ### Build the project
 
 ```bash
-cmake -B target
+cmake -S . -B target
 cmake --build target
 ```
 
 ### Run the project
 
 ```bash
-./target/seminar_3
+./target/app
+```
+
+### Run tests
+
+```bash
+ctest --test-dir target --output-on-failure
 ```
