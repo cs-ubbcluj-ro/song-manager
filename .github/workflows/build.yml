@@ -16,6 +16,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v5
 
+      - name: Install latest CMake
+        uses: lukka/get-cmake@latest
+
+      - name: Verify CMake version
+        run: cmake --version
+
       - name: Configure
         run: cmake -S . -B target
 
