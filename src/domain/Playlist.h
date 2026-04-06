@@ -1,5 +1,6 @@
 #pragma once
 
+#include <optional>
 #include "DynamicVector.h"
 #include "Song.h"
 

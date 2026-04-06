@@ -1,5 +1,6 @@
 #include "Controller.h"
 #include <string>
+#include <algorithm>
 
 void Controller::addSongToRepository(const std::string &artist, const std::string &title, const double minutes,
                                      const double seconds, const std::string &source) {
