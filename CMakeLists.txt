@@ -11,7 +11,7 @@ enable_testing()
 # -------------------------
 add_library(nlohmann_json INTERFACE)
 target_include_directories(nlohmann_json INTERFACE
-        ${CMAKE_SOURCE_DIR}/lib/nlohmann_json
+        ${CMAKE_SOURCE_DIR}/lib
 )
 
 # -------------------------
@@ -23,6 +23,10 @@ add_library(core
         src/domain/Song.cpp
         src/repository/Repository.cpp
         src/ui/UI.cpp
+        src/domain/List.h
+        src/domain/LinkedList.h
+        src/domain/FilePlaylist.h
+        src/domain/JsonPlaylist.h
 )
 
 target_include_directories(core PUBLIC

@@ -1,7 +1,10 @@
 #pragma once
 
+#include <stdexcept>
+#include "List.h"
+
 template<typename T>
-class DynamicVector {
+class DynamicVector : public List<T> {
 private:
     T *elems;
     int size;
@@ -15,7 +18,7 @@ public:
     DynamicVector(const DynamicVector &v);
 
     // destructor
-    ~DynamicVector();
+    ~DynamicVector() override;
 
     // assignment operator for a DynamicVector
     DynamicVector &operator=(const DynamicVector &v);
@@ -25,12 +28,12 @@ public:
         Input: pos - a valid position within the vector.
         Output: a reference to the element o position pos.
     */
-    T &operator[](int index);
+    T &operator[](int index) override;
 
     // Adds an element to the current DynamicVector.
-    void add(const T &e);
+    void add(const T &e) override;
 
-    int getSize() const;
+    int getSize() const override;
 
 private:
     // Resizes the current DynamicVector, multiplying its capacity by a given factor (real number).
@@ -121,6 +124,10 @@ DynamicVector<T> &DynamicVector<T>::operator=(const DynamicVector<T> &v) {
 
 template<typename T>
 T &DynamicVector<T>::operator[](int index) {
+    if (index < 0 || index >= size) {
+        throw std::out_of_range("Index out of range");
+    }
+
     return elems[index];
 }
 

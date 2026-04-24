@@ -2,6 +2,8 @@
 #include <cassert>
 #include "controller/Controller.h"
 #include "domain/DynamicVector.h"
+#include "domain/JsonPlaylist.h"
+#include "domain/LinkedList.h"
 #include "repository/Repository.h"
 #include "domain/Playlist.h"
 
@@ -88,10 +90,43 @@ void Tests::testController() {
     assert(list.getCurrentSong().value().getArtist() == "Ed Sheeran");
 }
 
+void Tests::testLinkedList() {
+    LinkedList<int> list{};
+    list.add(10);
+    list.add(20);
+    assert(list.getSize() == 2);
+    assert(list[0] == 10);
+    assert(list[1] == 20);
+}
+
+std::string Tests::generateRandomFilename(const std::string &prefix) {
+    auto now = std::chrono::system_clock::now();
+    auto timestamp = std::chrono::system_clock::to_time_t(now);
+    std::string path = prefix + "_" + std::to_string(timestamp) + ".json";
+    return path;
+}
+
+void Tests::testJsonPlaylist() {
+    auto path = generateRandomFilename("playlist");
+    JsonPlaylist playlist{path};
+    Song s1{"Ed Sheeran", "I see fire", Duration{4, 54}, "https://www.youtube.com/watch?v=2fngvQS_PmQ"};
+    Song s2{"Two Steps From Hell", "Heart of Courage", Duration{8, 12}, "https://www.youtube.com/watch?v=XYKUeZQbMF0"};
+    playlist.addSong(s1);
+    playlist.addSong(s2);
+    playlist.writeToFile();
+
+    JsonPlaylist playlist2{path};
+    assert(playlist2.getCurrentSong().value().getArtist() == "Ed Sheeran");
+    playlist2.next();
+    assert(playlist2.getCurrentSong().value().getArtist() == "Two Steps From Hell");
+}
+
 void Tests::testAll() {
     testSong();
     testDynamicVector();
     testRepository();
     testController();
     testPlaylist();
+    testLinkedList();
+    testJsonPlaylist();
 }
