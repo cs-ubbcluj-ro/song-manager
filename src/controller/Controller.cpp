@@ -14,7 +14,7 @@ void Controller::addSongToPlaylist(const Song &song) {
 
 void Controller::addAllSongsByArtistToPlaylist(const std::string &artist) {
     // get all the songs from the repository
-    DynamicVector<Song> songs = repo.getSongs();
+    std::vector<Song> songs = repo.getSongs();
 
     /*
     // I

@@ -1,12 +1,12 @@
 #pragma once
 
 #include <optional>
-#include "domain/DynamicVector.h"
 #include "domain/Song.h"
+#include <vector>
 
 class Repository {
 private:
-    DynamicVector<Song> songs;
+    std::vector<Song> songs = {};
 
 public:
     /*
@@ -28,5 +28,5 @@ public:
     */
     std::optional<Song> findByArtistAndTitle(const std::string &artist, const std::string &title);
 
-    DynamicVector<Song> getSongs() const { return songs; }
+    std::vector<Song> getSongs() const { return songs; }
 };

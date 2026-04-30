@@ -7,7 +7,7 @@ All notable changes to this project will be documented in this file.
 
 - [x] Finish the implementation of the class template DynamicVector, as well as Iterator, such that all tests pass and
   the application functions correctly.
-- [] Replace the DynamicVector with the STL vector and make all necessary changes. Replace the required function
+- [x] Replace the DynamicVector with the STL vector and make all necessary changes. Replace the required function
   implementations to use STL algorithms.
 
 ### Seminar 4
@@ -16,3 +16,8 @@ All notable changes to this project will be documented in this file.
   this class: DynamicVector (already implemented) and LinkedList.
 - [] Work with input/output streams, define custom extraction/insertion operators.
 - [x] Read/write data from/to files.
+
+### Seminar 5
+
+- [] Use inheritance and polymorphism to add an undo/redo functionality.
+- [] Work with smart pointers: unique_ptr.

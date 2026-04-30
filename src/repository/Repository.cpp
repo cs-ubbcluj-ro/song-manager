@@ -5,7 +5,7 @@
 using namespace std;
 
 void Repository::addSong(const Song &s) {
-    songs.add(s);
+    songs.push_back(s);
 }
 
 std::optional<Song> Repository::findByArtistAndTitle(const std::string &artist, const std::string &title) {

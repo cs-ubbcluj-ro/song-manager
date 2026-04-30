@@ -49,14 +49,13 @@ void UI::addSongToRepo() {
 }
 
 void UI::displayAllSongsRepo() {
-    DynamicVector<Song> songs = this->ctrl.getRepo().getSongs();
-    if (songs.getSize() == 0) {
+    const std::vector<Song> songs = this->ctrl.getRepo().getSongs();
+    if (songs.empty()) {
         cout << "There are no songs in the repository." << endl;
         return;
     }
 
-    for (int i = 0; i < songs.getSize(); i++) {
-        Song s = songs[i];
+    for (const auto& s : songs) {
         Duration d = s.getDuration();
         cout << s.getArtist() << " - " << s.getTitle() << "; " << d.getMinutes() << ":" << d.getSeconds() << endl;
     }

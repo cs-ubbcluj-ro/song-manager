@@ -6,6 +6,7 @@
 #include "domain/LinkedList.h"
 #include "repository/Repository.h"
 #include "domain/Playlist.h"
+#include <vector>
 
 void Tests::testSong() {
     Duration d{4, 54};
@@ -54,8 +55,8 @@ void Tests::testRepository() {
     assert(res.getTitle() == s.getTitle() && res.getArtist() == s.getArtist());
     assert(repo.findByArtistAndTitle("Ed Sheeran", "").has_value() == false);
 
-    DynamicVector<Song> songs = repo.getSongs();
-    assert(songs.getSize() == 1);
+    std::vector<Song> songs = repo.getSongs();
+    assert(songs.size() == 1);
 }
 
 void Tests::testPlaylist() {
@@ -83,7 +84,7 @@ void Tests::testController() {
     ctrl.addSongToPlaylist(s);
     ctrl.addAllSongsByArtistToPlaylist("Two Steps From Hell");
 
-    assert(ctrl.getRepo().getSongs().getSize() == 2);
+    assert(ctrl.getRepo().getSongs().size() == 2);
 
     Playlist list = ctrl.getPlaylist();
     assert(list.isEmpty() == false);
