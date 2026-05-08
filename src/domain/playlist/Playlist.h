@@ -1,8 +1,8 @@
 #pragma once
 
 #include <optional>
-#include "DynamicVector.h"
-#include "Song.h"
+#include "domain/Song.h"
+#include "domain/list/DynamicVector.h"
 
 class Playlist {
 protected:
@@ -18,5 +18,5 @@ public:
 
     std::optional<Song> getCurrentSong();
 
-    bool isEmpty() const;
+    [[nodiscard]] bool isEmpty() const;
 };

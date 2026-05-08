@@ -37,7 +37,7 @@ private:
 public:
     explicit JsonPlaylist(const std::string &filename) : FilePlaylist(filename) {
         readFromFile();
-    };
+    }
 
     ~JsonPlaylist() = default;
 

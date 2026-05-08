@@ -33,7 +33,7 @@ public:
     // Adds an element to the current DynamicVector.
     void add(const T &e) override;
 
-    int getSize() const override;
+    [[nodiscard]] int getSize() const override;
 
 private:
     // Resizes the current DynamicVector, multiplying its capacity by a given factor (real number).

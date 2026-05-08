@@ -4,7 +4,12 @@ Playlist::Playlist() : it{songs.begin()} {
 }
 
 void Playlist::addSong(const Song &s) {
-    songs.add(s);
+    if (isEmpty()) {
+        songs.add(s);
+        it = songs.begin();
+    } else {
+        songs.add(s);
+    }
 }
 
 void Playlist::next() {

@@ -1,11 +1,15 @@
 #include "Controller.h"
 #include <string>
 #include <algorithm>
+#include "domain/action/AddAction.h"
 
 void Controller::addSongToRepository(const std::string &artist, const std::string &title, const double minutes,
                                      const double seconds, const std::string &source) {
     const Song s{artist, title, Duration{minutes, seconds}, source};
     repo.addSong(s);
+
+    undoActions.push_back(std::make_unique<AddAction>(s, repo));
+    redoActions.clear();
 }
 
 void Controller::addSongToPlaylist(const Song &song) {
@@ -46,7 +50,7 @@ void Controller::addAllSongsByArtistToPlaylist(const std::string &artist) {
             this->addSongToPlaylist(song);
         }
     };
-    std::for_each(songs.begin(), songs.end(), lambda);
+    std::ranges::for_each(songs, lambda);
 }
 
 void Controller::startPlaylist() {
@@ -58,4 +62,30 @@ void Controller::startPlaylist() {
 
 void Controller::nextSongPlaylist() {
     playlist.next();
+}
+
+void Controller::undoRepositoryAction() {
+    if (undoActions.empty()) {
+        return;
+    }
+
+    auto action = std::move(undoActions.back());
+    undoActions.pop_back();
+
+    action->executeUndo();
+
+    redoActions.push_back(std::move(action));
+}
+
+void Controller::redoRepositoryAction() {
+    if (redoActions.empty()) {
+        return;
+    }
+
+    auto action = std::move(redoActions.back());
+    redoActions.pop_back();
+
+    action->executeRedo();
+
+    undoActions.push_back(std::move(action));
 }

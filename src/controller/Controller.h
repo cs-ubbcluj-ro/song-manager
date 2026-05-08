@@ -1,15 +1,20 @@
 #pragma once
 
-#include "domain/Playlist.h"
+#include <utility>
+#include "domain/action/Action.h"
+#include "domain/playlist/Playlist.h"
 #include "repository/Repository.h"
 
 class Controller {
 private:
     Repository repo;
     Playlist playlist;
+    std::vector<std::unique_ptr<Action> > undoActions;
+    std::vector<std::unique_ptr<Action> > redoActions;
 
 public:
-    explicit Controller(const Repository &r) : repo{r}, playlist{Playlist{}} {
+    explicit Controller(Repository r)
+        : repo{std::move(r)} {
     }
 
     Repository &getRepo() {
@@ -37,4 +42,8 @@ public:
     void startPlaylist();
 
     void nextSongPlaylist();
+
+    void undoRepositoryAction();
+
+    void redoRepositoryAction();
 };

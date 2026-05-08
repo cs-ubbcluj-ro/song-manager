@@ -19,14 +19,17 @@ target_include_directories(nlohmann_json INTERFACE
 # -------------------------
 add_library(core
         src/controller/Controller.cpp
-        src/domain/Playlist.cpp
+        src/domain/playlist/Playlist.cpp
         src/domain/Song.cpp
         src/repository/Repository.cpp
         src/ui/UI.cpp
-        src/domain/List.h
-        src/domain/LinkedList.h
-        src/domain/FilePlaylist.h
-        src/domain/JsonPlaylist.h
+        src/domain/list/List.h
+        src/domain/list/LinkedList.h
+        src/domain/playlist/FilePlaylist.h
+        src/domain/playlist/JsonPlaylist.h
+        src/domain/action/Action.h
+        src/domain/action/AddAction.h
+        src/domain/action/RemoveAction.h
 )
 
 target_include_directories(core PUBLIC

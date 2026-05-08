@@ -1,12 +1,9 @@
 #include "Tests.h"
 #include <cassert>
-#include "controller/Controller.h"
-#include "domain/DynamicVector.h"
-#include "domain/JsonPlaylist.h"
-#include "domain/LinkedList.h"
-#include "repository/Repository.h"
-#include "domain/Playlist.h"
 #include <vector>
+#include "controller/Controller.h"
+#include "domain/list/LinkedList.h"
+#include "domain/playlist/JsonPlaylist.h"
 
 void Tests::testSong() {
     Duration d{4, 54};
@@ -120,6 +117,21 @@ void Tests::testJsonPlaylist() {
     assert(playlist2.getCurrentSong().value().getArtist() == "Ed Sheeran");
     playlist2.next();
     assert(playlist2.getCurrentSong().value().getArtist() == "Two Steps From Hell");
+}
+
+void Tests::testUndoRedoFunctionality() {
+    Repository repo{};
+    Controller ctrl{repo};
+    ctrl.addSongToRepository("Ed Sheeran", "I see fire", 4, 54, "https://www.youtube.com/watch?v=2fngvQS_PmQ");
+    ctrl.addSongToRepository("Two Steps From Hell", "Heart of Courage", 8, 12,
+                             "https://www.youtube.com/watch?v=XYKUeZQbMF0");
+    assert(ctrl.getRepo().getSongs().size() == 2);
+
+    ctrl.undoRepositoryAction();
+    assert(ctrl.getRepo().getSongs().size() == 1);
+
+    ctrl.redoRepositoryAction();
+    assert(ctrl.getRepo().getSongs().size() == 2);
 }
 
 void Tests::testAll() {

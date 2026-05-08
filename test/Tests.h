@@ -18,6 +18,8 @@ public:
 
     static void testJsonPlaylist();
 
+    static void testUndoRedoFunctionality();
+
     static void testAll();
 
     static std::string generateRandomFilename(const std::string &prefix);

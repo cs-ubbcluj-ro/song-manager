@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <utility>
 
 class Duration {
 private:
@@ -13,8 +14,8 @@ public:
     Duration(const double min, const double sec) : minutes{min}, seconds{sec} {
     }
 
-    double getMinutes() const { return minutes; }
-    double getSeconds() const { return seconds; }
+    [[nodiscard]] double getMinutes() const { return minutes; }
+    [[nodiscard]] double getSeconds() const { return seconds; }
 };
 
 class Song {
@@ -29,15 +30,17 @@ public:
     Song() = default;
 
     // constructor with parameters
-    Song(const std::string &a, const std::string &t, const Duration &d, const std::string &s)
-        : artist{a}, title{t}, duration{d}, sourceUrl{s} {
+    Song(std::string a, std::string t, const Duration &d, std::string s)
+        : artist{std::move(a)}, title{std::move(t)}, duration{d}, sourceUrl{std::move(s)} {
     }
 
-    std::string getTitle() const { return title; }
-    std::string getArtist() const { return artist; }
-    std::string getSourceUrl() const { return sourceUrl; }
-    Duration getDuration() const { return duration; }
+    [[nodiscard]] std::string getTitle() const { return title; }
+    [[nodiscard]] std::string getArtist() const { return artist; }
+    [[nodiscard]] std::string getSourceUrl() const { return sourceUrl; }
+    [[nodiscard]] Duration getDuration() const { return duration; }
 
     // Plays the current song: the page corresponding to the source link is opened in a browser.
     void play() const;
+
+    bool operator==(const Song &s) const;
 };

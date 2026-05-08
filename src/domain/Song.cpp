@@ -13,3 +13,7 @@ void Song::play() const {
 
     system(cmd.c_str());
 }
+
+bool Song::operator==(const Song &s) const {
+    return this->artist == s.artist && this->title == s.title;
+}

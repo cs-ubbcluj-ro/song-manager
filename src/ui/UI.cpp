@@ -55,7 +55,7 @@ void UI::displayAllSongsRepo() {
         return;
     }
 
-    for (const auto& s : songs) {
+    for (const auto &s: songs) {
         Duration d = s.getDuration();
         cout << s.getArtist() << " - " << s.getTitle() << "; " << d.getMinutes() << ":" << d.getSeconds() << endl;
     }
@@ -93,7 +93,7 @@ void UI::playSongsFromPlaylist() {
         return;
     }
 
-    auto songOptional = ctrl.getPlaylist().getCurrentSong();
+    const auto songOptional = ctrl.getPlaylist().getCurrentSong();
     if (!songOptional.has_value()) {
         cerr << "There are no songs in the playlist." << endl;
         return;
@@ -106,6 +106,14 @@ void UI::playSongsFromPlaylist() {
 
 void UI::nextSongFromPlaylist() {
     ctrl.getPlaylist().next();
+}
+
+void UI::undoRepositoryAction() {
+    ctrl.undoRepositoryAction();
+}
+
+void UI::redoRepositoryAction() {
+    ctrl.redoRepositoryAction();
 }
 
 void UI::run() {
@@ -135,6 +143,12 @@ void UI::run() {
                         break;
                     case 2:
                         displayAllSongsRepo();
+                        break;
+                    case 3:
+                        undoRepositoryAction();
+                        break;
+                    case 4:
+                        redoRepositoryAction();
                         break;
                     default:
                         cout << "\nUnrecognized command." << endl;

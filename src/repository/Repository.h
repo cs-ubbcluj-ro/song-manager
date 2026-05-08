@@ -21,12 +21,14 @@ public:
     */
     void addSong(const Song &s);
 
+    void removeSong(const Song &s);
+
     /*
         Finds a song, by artist and title.
         Input: artist, title - string
         Output: the song that was found, or an "empty" song (all fields empty and duration 0), if nothing was found.
     */
-    std::optional<Song> findByArtistAndTitle(const std::string &artist, const std::string &title);
+    [[nodiscard]] std::optional<Song> findByArtistAndTitle(const std::string &artist, const std::string &title);
 
-    std::vector<Song> getSongs() const { return songs; }
+    [[nodiscard]] std::vector<Song> getSongs() const { return songs; }
 };

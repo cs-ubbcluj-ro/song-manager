@@ -19,5 +19,5 @@ All notable changes to this project will be documented in this file.
 
 ### Seminar 5
 
-- [] Use inheritance and polymorphism to add an undo/redo functionality.
-- [] Work with smart pointers: unique_ptr.
+- [x] Use inheritance and polymorphism to add an undo/redo functionality.
+- [x] Work with smart pointers: unique_ptr.

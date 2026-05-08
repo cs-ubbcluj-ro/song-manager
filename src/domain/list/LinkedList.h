@@ -1,5 +1,7 @@
 #pragma once
 
+#include "List.h"
+
 template<typename T>
 class LinkedList : public List<T> {
 private:
@@ -40,7 +42,7 @@ public:
             return *this;
 
         while (head != nullptr) {
-            Node *old = head;
+            const Node *old = head;
             head = head->next;
             delete old;
         }
@@ -70,7 +72,7 @@ public:
         ++length;
     }
 
-    int getSize() const override {
+    [[nodiscard]] int getSize() const override {
         return length;
     }
 
@@ -89,7 +91,7 @@ public:
 
     ~LinkedList() override {
         while (head != nullptr) {
-            Node *old = head;
+            const Node *old = head;
             head = head->next;
             delete old;
         }
