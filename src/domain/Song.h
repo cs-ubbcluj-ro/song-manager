@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <utility>
+#include <string>
 
 class Duration {
 private:

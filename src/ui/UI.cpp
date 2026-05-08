@@ -14,6 +14,8 @@ void UI::printRepositoryMenu() {
     cout << "Possible commands: " << endl;
     cout << "\t 1 - Add song." << endl;
     cout << "\t 2 - Display all." << endl;
+    cout << "\t 3 - Undo repository action." << endl;
+    cout << "\t 4 - Redo repository action." << endl;
     cout << "\t 0 - Back." << endl;
 }
 
@@ -104,18 +106,6 @@ void UI::playSongsFromPlaylist() {
     ctrl.startPlaylist();
 }
 
-void UI::nextSongFromPlaylist() {
-    ctrl.getPlaylist().next();
-}
-
-void UI::undoRepositoryAction() {
-    ctrl.undoRepositoryAction();
-}
-
-void UI::redoRepositoryAction() {
-    ctrl.redoRepositoryAction();
-}
-
 void UI::run() {
     while (true) {
     mainMenu:
@@ -145,10 +135,10 @@ void UI::run() {
                         displayAllSongsRepo();
                         break;
                     case 3:
-                        undoRepositoryAction();
+                        ctrl.undoRepositoryAction();
                         break;
                     case 4:
-                        redoRepositoryAction();
+                        ctrl.redoRepositoryAction();
                         break;
                     default:
                         cout << "\nUnrecognized command." << endl;
@@ -177,7 +167,7 @@ void UI::run() {
                         playSongsFromPlaylist();
                         break;
                     case 4:
-                        nextSongFromPlaylist();
+                        ctrl.getPlaylist().next();
                         break;
                     default:
                         cout << "\nUnrecognized command." << endl;

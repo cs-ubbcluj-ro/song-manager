@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Playlist.h"
 #include <utility>
+#include "Playlist.h"
 
 class FilePlaylist : public Playlist {
 protected:

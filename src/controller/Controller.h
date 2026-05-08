@@ -1,6 +1,8 @@
 #pragma once
 
-#include <utility>
+#include <vector>
+#include <memory>
+#include <string>
 #include "domain/action/Action.h"
 #include "domain/playlist/Playlist.h"
 #include "repository/Repository.h"

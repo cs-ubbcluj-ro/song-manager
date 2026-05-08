@@ -142,4 +142,5 @@ void Tests::testAll() {
     testPlaylist();
     testLinkedList();
     testJsonPlaylist();
+    testUndoRedoFunctionality();
 }

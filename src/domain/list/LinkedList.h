@@ -1,5 +1,6 @@
 #pragma once
 
+#include <stdexcept>
 #include "List.h"
 
 template<typename T>

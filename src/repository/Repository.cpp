@@ -1,6 +1,4 @@
 #include "Repository.h"
-#include "domain/Song.h"
-#include <string>
 
 using namespace std;
 
@@ -10,7 +8,8 @@ void Repository::addSong(const Song &s) {
 
 void Repository::removeSong(const Song &s) {
     const auto it = std::find(this->songs.begin(), this->songs.end(), s);
-    if (it != this->songs.end()) {
+    if (it == this->songs.end()) {
+        cerr << "Song not found" << endl;
         return;
     }
     songs.erase(it);

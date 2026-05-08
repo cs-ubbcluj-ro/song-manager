@@ -5,10 +5,10 @@
 
 class UI {
 private:
-    Controller ctrl;
+    Controller &ctrl;
 
 public:
-    explicit UI(Controller c) : ctrl(std::move(c)) {
+    explicit UI(Controller &controller) : ctrl(controller) {
     }
 
     void run();
@@ -29,10 +29,4 @@ private:
     void addAllSongsByArtistToPlaylist();
 
     void playSongsFromPlaylist();
-
-    void nextSongFromPlaylist();
-
-    void undoRepositoryAction();
-
-    void redoRepositoryAction();
 };

@@ -1,7 +1,8 @@
 #pragma once
-#include "FilePlaylist.h"
+
 #include <fstream>
 #include <nlohmann/json.hpp>
+#include "FilePlaylist.h"
 
 class JsonPlaylist : public FilePlaylist {
 private:
